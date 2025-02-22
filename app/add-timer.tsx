@@ -1,14 +1,21 @@
-import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { useRouter } from "expo-router";
 import { Timer } from "../app/src/types";
 import { saveTimers, loadTimers } from "./src/utils/storage";
 
 export default function AddTimer() {
   const router = useRouter();
-  const [name, setName] = useState('');
-  const [duration, setDuration] = useState('');
-  const [category, setCategory] = useState('');
+  const [name, setName] = useState("");
+  const [duration, setDuration] = useState("");
+  const [category, setCategory] = useState("");
   const [halfwayAlert, setHalfwayAlert] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -28,7 +35,7 @@ export default function AddTimer() {
         name,
         duration: parseInt(duration, 10),
         categoryId: category,
-        status: 'paused' as const,
+        status: "paused" as const,
         remainingTime: parseInt(duration, 10),
         halfwayAlert,
         halfwayAlertShown: false,
@@ -49,10 +56,6 @@ export default function AddTimer() {
       setIsSaving(false);
     }
   };
-
-
-
-
 
   return (
     <ScrollView style={styles.container}>
@@ -101,10 +104,7 @@ export default function AddTimer() {
           <Text style={styles.checkboxLabel}>Enable halfway alert</Text>
         </View>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleSubmit}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Create Timer</Text>
         </TouchableOpacity>
       </View>
@@ -115,7 +115,7 @@ export default function AddTimer() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: "black",
   },
   form: {
     padding: 16,
@@ -124,53 +124,53 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     borderRadius: 8,
     padding: 12,
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     padding: 15,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 20,
   },
   checkbox: {
     width: 24,
     height: 24,
     borderWidth: 2,
-    borderColor: '#007AFF',
+    borderColor: "#007AFF",
     borderRadius: 4,
     marginRight: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   checkboxChecked: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
   },
   checkmark: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
   checkboxLabel: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-  }
+  },
 });

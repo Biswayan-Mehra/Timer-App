@@ -1,8 +1,21 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, RefreshControl, Modal } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  RefreshControl,
+  Modal,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Timer, TimerHistory, TimerGroup } from "./src/types";
-import { loadTimers, saveTimers, loadHistory, saveHistory } from "./src/utils/storage";
+import {
+  loadTimers,
+  saveTimers,
+  loadHistory,
+  saveHistory,
+} from "./src/utils/storage";
 import CategoryGroup from "./components/CategoryGroup";
 
 export default function HomeScreen() {
@@ -11,9 +24,11 @@ export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [showCompletionModal, setShowCompletionModal] = useState(false);
   const [completedTimer, setCompletedTimer] = useState<Timer | null>(null);
-  const [categoryStates, setCategoryStates] = useState<{[key: string]: boolean}>({});
+  const [categoryStates, setCategoryStates] = useState<{
+    [key: string]: boolean;
+  }>({});
   const [showAlertModal, setShowAlertModal] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
+  const [alertMessage, setAlertMessage] = useState("");
   const intervalRef = useRef<NodeJS.Timeout>();
   const isLoadingRef = useRef(false);
 
@@ -25,17 +40,19 @@ export default function HomeScreen() {
       const storedTimers = await loadTimers();
 
       // Sort timers by ID to maintain consistent order
-      const sortedTimers = [...storedTimers].sort((a, b) =>
-        parseInt(a.id) - parseInt(b.id)
+      const sortedTimers = [...storedTimers].sort(
+        (a, b) => parseInt(a.id) - parseInt(b.id)
       );
 
       setTimers(sortedTimers);
 
       // Update category states while preserving existing states
-      const categories = [...new Set(sortedTimers.map(timer => timer.categoryId))];
-      setCategoryStates(prevStates => {
+      const categories = [
+        ...new Set(sortedTimers.map((timer) => timer.categoryId)),
+      ];
+      setCategoryStates((prevStates) => {
         const newStates = { ...prevStates };
-        categories.forEach(cat => {
+        categories.forEach((cat) => {
           if (!(cat in newStates)) newStates[cat] = true;
         });
         return newStates;
@@ -52,7 +69,7 @@ export default function HomeScreen() {
         timerName: timer.name,
         categoryName: timer.categoryId,
         completedAt: new Date().toISOString(),
-        duration: timer.duration
+        duration: timer.duration,
       };
 
       const existingHistory = await loadHistory();
@@ -71,56 +88,61 @@ export default function HomeScreen() {
     }
   }, []);
 
-  const handleTimerCompletion = useCallback(async (timer: Timer) => {
-    // First, add to history
-    const historySuccess = await addToHistory(timer);
-    if (!historySuccess) {
-      console.error("Failed to add timer to history");
-      return;
-    }
+  const handleTimerCompletion = useCallback(
+    async (timer: Timer) => {
+      // First, add to history
+      const historySuccess = await addToHistory(timer);
+      if (!historySuccess) {
+        console.error("Failed to add timer to history");
+        return;
+      }
 
-    // Then update the timers list
-    setTimers(currentTimers => {
-      const updatedTimers = currentTimers.filter(t => t.id !== timer.id);
-      saveTimers(updatedTimers); // Fire and forget
-      return updatedTimers;
-    });
+      // Then update the timers list
+      setTimers((currentTimers) => {
+        const updatedTimers = currentTimers.filter((t) => t.id !== timer.id);
+        saveTimers(updatedTimers); // Fire and forget
+        return updatedTimers;
+      });
 
-    // Show completion modal
-    setCompletedTimer(timer);
-    setShowCompletionModal(true);
-  }, [addToHistory]);
+      // Show completion modal
+      setCompletedTimer(timer);
+      setShowCompletionModal(true);
+    },
+    [addToHistory]
+  );
 
   // Timer interval effect
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       setTimers((currentTimers: Timer[]) => {
         let needsUpdate = false;
-        const updatedTimers = currentTimers.map(timer => {
-          if (timer.status !== 'running') return timer;
+        const updatedTimers = currentTimers.map((timer) => {
+          if (timer.status !== "running") return timer;
 
           const newRemainingTime = timer.remainingTime - 1;
 
-          if (timer.halfwayAlert &&
-              !timer.halfwayAlertShown &&
-              newRemainingTime <= timer.duration / 2) {
+          if (
+            timer.halfwayAlert &&
+            !timer.halfwayAlertShown &&
+            newRemainingTime <= timer.duration / 2
+          ) {
             setAlertMessage(`${timer.name} is halfway complete!`);
             setShowAlertModal(true);
             needsUpdate = true;
             return {
               ...timer,
               remainingTime: newRemainingTime,
-              halfwayAlertShown: true
+              halfwayAlertShown: true,
             };
           }
 
-          if (newRemainingTime <= 0) {
+          if (newRemainingTime <= 1) {
             handleTimerCompletion(timer);
             needsUpdate = true;
             return {
               ...timer,
-              status: 'completed' as const,
-              remainingTime: 0
+              status: "completed" as const,
+              remainingTime: 0,
             };
           }
 
@@ -165,19 +187,19 @@ export default function HomeScreen() {
     intervalRef.current = setInterval(() => {
       // In the interval effect, modify the setTimers call:
       setTimers((currentTimers: Timer[]) => {
-        const updatedTimers = currentTimers.map(timer => {
-          if (timer.status !== 'running') return timer;
+        const updatedTimers = currentTimers.map((timer) => {
+          if (timer.status !== "running") return timer;
 
           const newRemainingTime = timer.remainingTime - 1;
           if (newRemainingTime <= 0) {
             setCompletedTimer(timer);
             setShowCompletionModal(true);
-            return { ...timer, status: 'completed' as const, remainingTime: 0 };
+            return { ...timer, status: "completed" as const, remainingTime: 0 };
           }
           return { ...timer, remainingTime: newRemainingTime };
         });
 
-        saveTimers(updatedTimers);
+        //saveTimers(updatedTimers);
         return updatedTimers;
       });
     }, 1000);
@@ -185,17 +207,24 @@ export default function HomeScreen() {
     return () => clearInterval(intervalRef.current);
   }, []);
 
-  const handleTimerAction = async (timerId: string, action: 'start' | 'pause' | 'reset') => {
-    const updatedTimers = timers.map(timer => {
+  const handleTimerAction = async (
+    timerId: string,
+    action: "start" | "pause" | "reset"
+  ) => {
+    const updatedTimers = timers.map((timer) => {
       if (timer.id !== timerId) return timer;
 
       switch (action) {
-        case 'start':
-          return { ...timer, status: 'running' as 'running' };
-        case 'pause':
-          return { ...timer, status: 'paused' as 'paused' };
-        case 'reset':
-          return { ...timer, status: 'paused' as 'paused', remainingTime: timer.duration };
+        case "start":
+          return { ...timer, status: "running" as "running" };
+        case "pause":
+          return { ...timer, status: "paused" as "paused" };
+        case "reset":
+          return {
+            ...timer,
+            status: "paused" as "paused",
+            remainingTime: timer.duration,
+          };
         default:
           return timer;
       }
@@ -207,18 +236,24 @@ export default function HomeScreen() {
     await saveTimers(updatedTimers); // Saves updated timers to storage
   };
 
-
-  const handleCategoryAction = async (categoryId: string, action: 'start' | 'pause' | 'reset') => {
-    const updatedTimers = timers.map(timer => {
+  const handleCategoryAction = async (
+    categoryId: string,
+    action: "start" | "pause" | "reset"
+  ) => {
+    const updatedTimers = timers.map((timer) => {
       if (timer.categoryId !== categoryId) return timer;
 
       switch (action) {
-        case 'start':
-          return { ...timer, status: 'running' as 'running' };
-        case 'pause':
-          return { ...timer, status: 'paused' as 'paused' };
-        case 'reset':
-          return { ...timer, status: 'paused' as 'paused', remainingTime: timer.duration };
+        case "start":
+          return { ...timer, status: "running" as "running" };
+        case "pause":
+          return { ...timer, status: "paused" as "paused" };
+        case "reset":
+          return {
+            ...timer,
+            status: "paused" as "paused",
+            remainingTime: timer.duration,
+          };
         default:
           return timer;
       }
@@ -229,9 +264,9 @@ export default function HomeScreen() {
   };
 
   const toggleCategory = (categoryId: string) => {
-    setCategoryStates(prev => ({
+    setCategoryStates((prev) => ({
       ...prev,
-      [categoryId]: !prev[categoryId]
+      [categoryId]: !prev[categoryId],
     }));
   };
 
@@ -269,25 +304,27 @@ export default function HomeScreen() {
             </Text>
           </View>
         ) : (
-          timerGroups.map(group => (
+          timerGroups.map((group) => (
             <CategoryGroup
               key={group.category.id}
               group={group}
               onToggle={() => toggleCategory(group.category.id)}
-              onStartAll={() => handleCategoryAction(group.category.id, 'start')}
-              onPauseAll={() => handleCategoryAction(group.category.id, 'pause')}
-              onResetAll={() => handleCategoryAction(group.category.id, 'reset')}
+              onStartAll={() =>
+                handleCategoryAction(group.category.id, "start")
+              }
+              onPauseAll={() =>
+                handleCategoryAction(group.category.id, "pause")
+              }
+              onResetAll={() =>
+                handleCategoryAction(group.category.id, "reset")
+              }
               onTimerAction={handleTimerAction}
             />
           ))
         )}
       </ScrollView>
 
-      <Modal
-        visible={showCompletionModal}
-        transparent
-        animationType="fade"
-      >
+      <Modal visible={showCompletionModal} transparent animationType="fade">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Timer Completed!</Text>
@@ -305,11 +342,7 @@ export default function HomeScreen() {
       </Modal>
 
       {/* Halfway Alert Modal */}
-      <Modal
-        visible={showAlertModal}
-        transparent
-        animationType="fade"
-      >
+      <Modal visible={showAlertModal} transparent animationType="fade">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Timer Alert</Text>
@@ -346,7 +379,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: "#121212",
   },
   content: {
     flex: 1,
@@ -354,115 +387,114 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 100,
   },
   emptyStateText: {
-    color: 'white',
+    color: "white",
     fontSize: 24,
     marginBottom: 8,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   emptyStateSubText: {
-    color: '#888',
+    color: "#888",
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: "center",
   },
   timerList: {
     gap: 12,
   },
   timerCard: {
-    backgroundColor: '#1E1E1E',
+    backgroundColor: "#1E1E1E",
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#333',
+    borderColor: "#333",
   },
   timerName: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 8,
   },
   timerDuration: {
-    color: '#007AFF',
+    color: "#007AFF",
     fontSize: 16,
     marginBottom: 4,
   },
   timerCategory: {
-    color: '#666',
+    color: "#666",
     fontSize: 14,
   },
   bottomBar: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 16,
     borderTopWidth: 1,
-    borderTopColor: '#333',
-    backgroundColor: '#121212',
+    borderTopColor: "#333",
+    backgroundColor: "#121212",
   },
   addButton: {
     flex: 2,
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     padding: 15,
     borderRadius: 12,
     marginRight: 8,
-    alignItems: 'center',
+    alignItems: "center",
   },
   historyButton: {
     flex: 1,
-    backgroundColor: '#1E1E1E',
+    backgroundColor: "#1E1E1E",
     padding: 15,
     borderRadius: 12,
-    alignItems: 'center',
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#333',
+    borderColor: "#333",
   },
   addButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalContent: {
-    backgroundColor: '#1E1E1E',
+    backgroundColor: "#1E1E1E",
     padding: 20,
     borderRadius: 12,
-    alignItems: 'center',
+    alignItems: "center",
     minWidth: 300,
   },
   modalTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 12,
   },
   modalText: {
-    color: '#888',
+    color: "#888",
     fontSize: 16,
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   modalButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     padding: 12,
     borderRadius: 8,
     minWidth: 100,
-    alignItems: 'center',
+    alignItems: "center",
   },
   modalButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
-
