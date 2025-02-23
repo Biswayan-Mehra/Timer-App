@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  StatusBar,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Timer } from "../app/src/types";
@@ -58,57 +59,60 @@ export default function AddTimer() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.form}>
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Timer Name</Text>
-          <TextInput
-            style={styles.input}
-            value={name}
-            onChangeText={setName}
-            placeholder="Enter timer name"
-            placeholderTextColor="#666"
-          />
-        </View>
+    <View style={styles.container}>
+      <StatusBar backgroundColor="black" barStyle="light-content" />
+      <ScrollView style={styles.container}>
+        <View style={styles.form}>
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Timer Name</Text>
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+              placeholder="Enter timer name"
+              placeholderTextColor="#666"
+            />
+          </View>
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Duration (seconds)</Text>
-          <TextInput
-            style={styles.input}
-            value={duration}
-            onChangeText={setDuration}
-            placeholder="Enter duration in seconds"
-            keyboardType="numeric"
-            placeholderTextColor="#666"
-          />
-        </View>
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Duration (seconds)</Text>
+            <TextInput
+              style={styles.input}
+              value={duration}
+              onChangeText={setDuration}
+              placeholder="Enter duration in seconds"
+              keyboardType="numeric"
+              placeholderTextColor="#666"
+            />
+          </View>
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Category</Text>
-          <TextInput
-            style={styles.input}
-            value={category}
-            onChangeText={setCategory}
-            placeholder="Enter category"
-            placeholderTextColor="#666"
-          />
-        </View>
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Category</Text>
+            <TextInput
+              style={styles.input}
+              value={category}
+              onChangeText={setCategory}
+              placeholder="Enter category"
+              placeholderTextColor="#666"
+            />
+          </View>
 
-        <View style={styles.checkboxContainer}>
-          <TouchableOpacity
-            style={[styles.checkbox, halfwayAlert && styles.checkboxChecked]}
-            onPress={() => setHalfwayAlert(!halfwayAlert)}
-          >
-            {halfwayAlert && <Text style={styles.checkmark}>✓</Text>}
+          <View style={styles.checkboxContainer}>
+            <TouchableOpacity
+              style={[styles.checkbox, halfwayAlert && styles.checkboxChecked]}
+              onPress={() => setHalfwayAlert(!halfwayAlert)}
+            >
+              {halfwayAlert && <Text style={styles.checkmark}>✓</Text>}
+            </TouchableOpacity>
+            <Text style={styles.checkboxLabel}>Enable halfway alert</Text>
+          </View>
+
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>Create Timer</Text>
           </TouchableOpacity>
-          <Text style={styles.checkboxLabel}>Enable halfway alert</Text>
         </View>
-
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Create Timer</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 

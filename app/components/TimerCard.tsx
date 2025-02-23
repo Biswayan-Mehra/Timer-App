@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Animated,
 } from "react-native";
 import { Timer } from "../src/types";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   timer: Timer;
@@ -16,7 +17,17 @@ interface Props {
 }
 
 export default function TimerCard({ timer, onStart, onPause, onReset }: Props) {
-  const progress = (timer.remainingTime / timer.duration) * 100;
+  const progressAnim = useRef(
+    new Animated.Value((timer.remainingTime / timer.duration) * 100)
+  ).current;
+
+  useEffect(() => {
+    Animated.timing(progressAnim, {
+      toValue: (timer.remainingTime / timer.duration) * 100,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  }, [timer.remainingTime]);
 
   return (
     <View style={styles.card}>
@@ -26,22 +37,32 @@ export default function TimerCard({ timer, onStart, onPause, onReset }: Props) {
       </View>
 
       <View style={styles.progressContainer}>
-        <View style={[styles.progressBar, { width: `${progress}%` }]} />
+        <Animated.View
+          style={[
+            styles.progressBar,
+            {
+              width: progressAnim.interpolate({
+                inputRange: [0, 100],
+                outputRange: ["0%", "100%"],
+              }),
+            },
+          ]}
+        />
         <Text style={styles.time}>{timer.remainingTime}s</Text>
       </View>
 
       <View style={styles.controls}>
         {timer.status === "paused" ? (
           <TouchableOpacity style={styles.button} onPress={onStart}>
-            <Text style={styles.buttonText}>Start</Text>
+            <Ionicons name="play" size={20} color="white" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.button} onPress={onPause}>
-            <Text style={styles.buttonText}>Pause</Text>
+            <Ionicons name="pause" size={20} color="white" />
           </TouchableOpacity>
         )}
         <TouchableOpacity style={styles.button} onPress={onReset}>
-          <Text style={styles.buttonText}>Reset</Text>
+          <Ionicons name="refresh" size={20} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -53,9 +74,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#1E1E1E",
     borderRadius: 12,
     padding: 16,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: "#333",
+    marginTop: 6,
+    marginBottom: 6,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   header: {
     flexDirection: "row",

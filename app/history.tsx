@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, StatusBar } from "react-native";
 import { useState, useEffect } from "react";
 import { TimerHistory } from "./src/types"; // Updated import path
 import { loadHistory } from "./src/utils/storage"; // Updated import path
@@ -20,29 +20,32 @@ export default function History() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {history.length === 0 ? (
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyStateText}>No completed timers yet</Text>
-          <Text style={styles.emptyStateSubText}>
-            Complete some timers to see them here
-          </Text>
-        </View>
-      ) : (
-        history.map((item) => (
-          <View key={item.id} style={styles.historyItem}>
-            <Text style={styles.timerName}>{item.timerName}</Text>
-            <Text style={styles.categoryName}>{item.categoryName}</Text>
-            <Text style={styles.durationText}>
-              Duration: {item.duration} seconds
-            </Text>
-            <Text style={styles.completedAt}>
-              Completed: {formatDate(item.completedAt)}
+    <View style={styles.container}>
+      <StatusBar backgroundColor="#121212" barStyle="light-content" />
+      <ScrollView style={styles.container}>
+        {history.length === 0 ? (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyStateText}>No completed timers yet</Text>
+            <Text style={styles.emptyStateSubText}>
+              Complete some timers to see them here
             </Text>
           </View>
-        ))
-      )}
-    </ScrollView>
+        ) : (
+          history.map((item) => (
+            <View key={item.id} style={styles.historyItem}>
+              <Text style={styles.timerName}>{item.timerName}</Text>
+              <Text style={styles.categoryName}>{item.categoryName}</Text>
+              <Text style={styles.durationText}>
+                Duration: {item.duration} seconds
+              </Text>
+              <Text style={styles.completedAt}>
+                Completed: {formatDate(item.completedAt)}
+              </Text>
+            </View>
+          ))
+        )}
+      </ScrollView>
+    </View>
   );
 }
 

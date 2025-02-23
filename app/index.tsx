@@ -6,6 +6,7 @@ import {
   ScrollView,
   RefreshControl,
   Modal,
+  StatusBar,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useState, useEffect, useCallback, useRef } from "react";
@@ -17,8 +18,24 @@ import {
   saveHistory,
 } from "./src/utils/storage";
 import CategoryGroup from "./components/CategoryGroup";
+import * as SplashScreen from "expo-splash-screen";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function HomeScreen() {
+  useEffect(() => {
+    // Simulate a loading process (e.g., fetching data, initializing app)
+    const initializeApp = async () => {
+      // Add any initialization logic here (e.g., loading fonts, fetching data)
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate a 2-second delay
+    };
+
+    initializeApp().then(() => {
+      // Hide the splash screen after initialization is complete
+      SplashScreen.hideAsync();
+    });
+  }, []);
+
   const router = useRouter();
   const [timers, setTimers] = useState<Timer[]>([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -182,31 +199,6 @@ export default function HomeScreen() {
     setShowCompletionModal(false);
   }, []);
 
-  // Timer management
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      // In the interval effect, modify the setTimers call:
-      setTimers((currentTimers: Timer[]) => {
-        const updatedTimers = currentTimers.map((timer) => {
-          if (timer.status !== "running") return timer;
-
-          const newRemainingTime = timer.remainingTime - 1;
-          if (newRemainingTime <= 0) {
-            setCompletedTimer(timer);
-            setShowCompletionModal(true);
-            return { ...timer, status: "completed" as const, remainingTime: 0 };
-          }
-          return { ...timer, remainingTime: newRemainingTime };
-        });
-
-        //saveTimers(updatedTimers);
-        return updatedTimers;
-      });
-    }, 1000);
-
-    return () => clearInterval(intervalRef.current);
-  }, []);
-
   const handleTimerAction = async (
     timerId: string,
     action: "start" | "pause" | "reset"
@@ -290,6 +282,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#121212" barStyle="light-content" />
       <ScrollView
         style={styles.content}
         refreshControl={

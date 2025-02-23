@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { TimerGroup } from "../src/types";
 import TimerCard from "./TimerCard";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   group: TimerGroup;
@@ -31,12 +32,15 @@ export default function CategoryGroup({
         <>
           <View style={styles.bulkActions}>
             <TouchableOpacity style={styles.bulkButton} onPress={onStartAll}>
+              <Ionicons name="play" size={20} color="white" />
               <Text style={styles.buttonText}>Start All</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bulkButton} onPress={onPauseAll}>
+              <Ionicons name="pause" size={20} color="white" />
               <Text style={styles.buttonText}>Pause All</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bulkButton} onPress={onResetAll}>
+              <Ionicons name="refresh" size={20} color="white" />
               <Text style={styles.buttonText}>Reset All</Text>
             </TouchableOpacity>
           </View>
@@ -89,6 +93,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     minWidth: 100,
     alignItems: "center",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
   buttonText: {
     color: "white",
