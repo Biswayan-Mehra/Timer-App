@@ -65,15 +65,15 @@ Once the build completes, Expo will provide a link to download the **APK**.
 
 ## 📸 Screenshots
 
-![App Preview 1](https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img1.jpg)
+<img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img1.jpg" alt="App Preview 1" width="400"/>
 
-![App Preview 2](https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img2.jpg)
+<img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img2.jpg" alt="App Preview 2" width="400"/>
 
-![App Preview 3](https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img3.jpg)
+<img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img3.jpg" alt="App Preview 3" width="400"/>
 
-![App Preview 4](https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img4.jpg)
+<img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img4.jpg" alt="App Preview 4" width="400"/>
 
-![App Preview 5](https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img5.jpg)
+<img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img5.jpg" alt="App Preview 5" width="400"/>
 
 ---
 
