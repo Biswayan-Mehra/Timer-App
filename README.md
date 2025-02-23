@@ -66,10 +66,10 @@ Once the build completes, Expo will provide a link to download the **APK**.
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img1.jpg" width="300"/>
-  <img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img2.jpg" width="300"/>
-  <img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img3.jpg" width="300"/>
-  <img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img4.jpg" width="300"/>
+  <img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img1.jpg" width="300" style="margin-right: 10px;"/>
+  <img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img2.jpg" width="300" style="margin-right: 10px;"/>
+  <img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img3.jpg" width="300" style="margin-right: 10px;"/>
+  <img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img4.jpg" width="300" style="margin-right: 10px;"/>
   <img src="https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img5.jpg" width="300"/>
 </p>
 
