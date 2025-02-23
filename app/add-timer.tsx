@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StatusBar,
+  Animated,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Timer } from "../app/src/types";
@@ -19,6 +20,15 @@ export default function AddTimer() {
   const [category, setCategory] = useState("");
   const [halfwayAlert, setHalfwayAlert] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const handleSubmit = async () => {
     if (isSaving) return;
@@ -61,8 +71,9 @@ export default function AddTimer() {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="black" barStyle="light-content" />
+      <Text style={styles.header}>New Timer</Text>
       <ScrollView style={styles.container}>
-        <View style={styles.form}>
+        <Animated.View style={[styles.form, { opacity: fadeAnim }]}>
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Timer Name</Text>
             <TextInput
@@ -110,7 +121,7 @@ export default function AddTimer() {
           <TouchableOpacity style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Create Timer</Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       </ScrollView>
     </View>
   );
@@ -119,7 +130,15 @@ export default function AddTimer() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#121212",
+  },
+  header: {
+    color: "white",
+    fontSize: 32,
+    fontWeight: "bold",
+    marginTop: 6,
+    marginBottom: 6,
+    paddingHorizontal: 16,
   },
   form: {
     padding: 16,

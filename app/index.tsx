@@ -7,6 +7,7 @@ import {
   RefreshControl,
   Modal,
   StatusBar,
+  Animated,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useState, useEffect, useCallback, useRef } from "react";
@@ -23,19 +24,6 @@ import * as SplashScreen from "expo-splash-screen";
 SplashScreen.preventAutoHideAsync();
 
 export default function HomeScreen() {
-  useEffect(() => {
-    // Simulate a loading process (e.g., fetching data, initializing app)
-    const initializeApp = async () => {
-      // Add any initialization logic here (e.g., loading fonts, fetching data)
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate a 2-second delay
-    };
-
-    initializeApp().then(() => {
-      // Hide the splash screen after initialization is complete
-      SplashScreen.hideAsync();
-    });
-  }, []);
-
   const router = useRouter();
   const [timers, setTimers] = useState<Timer[]>([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -48,6 +36,22 @@ export default function HomeScreen() {
   const [alertMessage, setAlertMessage] = useState("");
   const intervalRef = useRef<NodeJS.Timeout>();
   const isLoadingRef = useRef(false);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const initializeApp = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    initializeApp().then(() => {
+      SplashScreen.hideAsync();
+    });
+  }, []);
 
   const loadStoredTimers = useCallback(async () => {
     if (isLoadingRef.current) return;
@@ -283,6 +287,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#121212" barStyle="light-content" />
+      <Text style={styles.header}>My Timers</Text>
       <ScrollView
         style={styles.content}
         refreshControl={
@@ -290,12 +295,12 @@ export default function HomeScreen() {
         }
       >
         {timerGroups.length === 0 ? (
-          <View style={styles.emptyState}>
+          <Animated.View style={[styles.emptyState, { opacity: fadeAnim }]}>
             <Text style={styles.emptyStateText}>No timers yet</Text>
             <Text style={styles.emptyStateSubText}>
               Create your first timer to get started
             </Text>
-          </View>
+          </Animated.View>
         ) : (
           timerGroups.map((group) => (
             <CategoryGroup
@@ -374,6 +379,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#121212",
   },
+  header: {
+    marginTop: 6,
+    color: "white",
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBottom: 6,
+    paddingHorizontal: 16,
+  },
   content: {
     flex: 1,
     padding: 16,
@@ -441,8 +454,6 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 12,
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#333",
   },
   addButtonText: {
     color: "white",
