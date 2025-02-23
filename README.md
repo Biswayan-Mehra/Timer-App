@@ -65,6 +65,15 @@ Once the build completes, Expo will provide a link to download the **APK**.
 
 ## 📸 Screenshots
 
+![App Preview 1](https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img1.jpg)
+
+![App Preview 2](https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img2.jpg)
+
+![App Preview 3](https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img3.jpg)
+
+![App Preview 4](https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img4.jpg)
+
+![App Preview 5](https://raw.githubusercontent.com/Biswayan-Mehra/Timer-App/refs/heads/main/assets/images/img5.jpg)
 
 ---
 
