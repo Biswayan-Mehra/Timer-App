@@ -1,5 +1,11 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 import { Timer } from "../src/types";
 
 interface Props {
@@ -25,7 +31,7 @@ export default function TimerCard({ timer, onStart, onPause, onReset }: Props) {
       </View>
 
       <View style={styles.controls}>
-        {timer.status === 'paused' ? (
+        {timer.status === "paused" ? (
           <TouchableOpacity style={styles.button} onPress={onStart}>
             <Text style={styles.buttonText}>Start</Text>
           </TouchableOpacity>
@@ -44,56 +50,56 @@ export default function TimerCard({ timer, onStart, onPause, onReset }: Props) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#1E1E1E',
+    backgroundColor: "#1E1E1E",
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#333',
+    borderColor: "#333",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 12,
   },
   name: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   category: {
-    color: '#666',
+    color: "#666",
     fontSize: 14,
   },
   progressContainer: {
     height: 20,
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     borderRadius: 10,
-    overflow: 'hidden',
+    overflow: "hidden",
     marginBottom: 12,
   },
   progressBar: {
-    height: '100%',
-    backgroundColor: '#007AFF',
-    position: 'absolute',
+    height: "100%",
+    backgroundColor: "#007AFF",
+    position: "absolute",
   },
   time: {
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
     lineHeight: 20,
   },
   controls: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   button: {
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     padding: 8,
     borderRadius: 8,
     minWidth: 80,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonText: {
-    color: 'white',
+    color: "white",
   },
 });

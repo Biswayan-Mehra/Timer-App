@@ -8,31 +8,31 @@ export default function RootLayout() {
         screenOptions={{
           headerShown: true,
           headerStyle: {
-            backgroundColor: 'black',
+            backgroundColor: "black",
           },
-          headerTintColor: 'white',
+          headerTintColor: "white",
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: "bold",
           },
         }}
       >
         <Stack.Screen
           name="index"
           options={{
-            title: 'My Timers',
+            title: "My Timers",
           }}
         />
         <Stack.Screen
           name="add-timer"
           options={{
-            title: 'Add Timer',
-            presentation: 'modal'
+            title: "Add Timer",
+            presentation: "modal",
           }}
         />
         <Stack.Screen
           name="history"
           options={{
-            title: 'History'
+            title: "History",
           }}
         />
       </Stack>

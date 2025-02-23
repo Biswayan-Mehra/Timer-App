@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { TimerGroup } from "../src/types";
-import TimerCard from './TimerCard';
+import TimerCard from "./TimerCard";
 
 interface Props {
   group: TimerGroup;
@@ -9,7 +9,7 @@ interface Props {
   onStartAll: () => void;
   onPauseAll: () => void;
   onResetAll: () => void;
-  onTimerAction: (timerId: string, action: 'start' | 'pause' | 'reset') => void;
+  onTimerAction: (timerId: string, action: "start" | "pause" | "reset") => void;
 }
 
 export default function CategoryGroup({
@@ -18,7 +18,7 @@ export default function CategoryGroup({
   onStartAll,
   onPauseAll,
   onResetAll,
-  onTimerAction
+  onTimerAction,
 }: Props) {
   return (
     <View style={styles.container}>
@@ -41,13 +41,13 @@ export default function CategoryGroup({
             </TouchableOpacity>
           </View>
 
-          {group.timers.map(timer => (
+          {group.timers.map((timer) => (
             <TimerCard
               key={timer.id}
               timer={timer}
-              onStart={() => onTimerAction(timer.id, 'start')}
-              onPause={() => onTimerAction(timer.id, 'pause')}
-              onReset={() => onTimerAction(timer.id, 'reset')}
+              onStart={() => onTimerAction(timer.id, "start")}
+              onPause={() => onTimerAction(timer.id, "pause")}
+              onReset={() => onTimerAction(timer.id, "reset")}
             />
           ))}
         </>
@@ -61,36 +61,36 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 16,
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     borderRadius: 12,
   },
   title: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   count: {
-    color: '#888',
+    color: "#888",
   },
   bulkActions: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     padding: 12,
-    backgroundColor: '#1E1E1E',
+    backgroundColor: "#1E1E1E",
     marginTop: 8,
     borderRadius: 8,
   },
   bulkButton: {
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     padding: 8,
     borderRadius: 8,
     minWidth: 100,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonText: {
-    color: 'white',
+    color: "white",
   },
 });

@@ -5,15 +5,15 @@ export interface Timer {
   name: string;
   duration: number;
   categoryId: string;
-  status: 'running' | 'paused' | 'completed';
+  status: "running" | "paused" | "completed";
   remainingTime: number;
   halfwayAlert: boolean;
-  halfwayAlertShown?: boolean;  // New field
+  halfwayAlertShown?: boolean; // New field
 }
 
 export interface TimerHistory {
   id: string;
-  timerName: string;  // Removed timerId since it's not used in your implementation
+  timerName: string; // Removed timerId since it's not used in your implementation
   categoryName: string;
   completedAt: string;
   duration: number;

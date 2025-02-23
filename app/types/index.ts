@@ -3,7 +3,7 @@ export interface Timer {
   name: string;
   duration: number;
   categoryId: string;
-  status: 'running' | 'paused' | 'completed';
+  status: "running" | "paused" | "completed";
   remainingTime: number;
   halfwayAlert?: boolean;
 }
