@@ -1,28 +1,72 @@
-# Welcome to my Expo app 👋
+# ⏳ Timer App
+A beautifully crafted **Expo-based React Native timer app** to help you track time efficiently!
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
+![React Native](https://img.shields.io/badge/React%20Native-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Features
+✅ **Simple & Intuitive UI** – Minimalist design for easy use.
+✅ **Accurate Timer** – Keeps track of time with precision.
+✅ **Expo-Powered** – Fast, reliable, and cross-platform support.
+✅ **Lightweight & Fast** – Optimized for performance.
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## 📥 Download the App
+🔹 **[Download APK](https://expo.dev/artifacts/eas/4wLtyo1E5fnDhrvugFC4nH.apk) (Direct Link)**
 
-   ```bash
-    npx expo start
-   ```
+> ⚠️ **Note:** This APK link may expire. If it's unavailable, follow the **build guide** below to generate a fresh APK.
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🛠️ Getting Started
+
+### 1️⃣ Install Dependencies
+```bash
+npm install
+```
+
+### 2️⃣ Start the Expo Development Server
+```bash
+npx expo start
+```
+
+### 3️⃣ Open the App
+You can run the app in:
+- [Development Build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android Emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS Simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go) (for quick testing)
+
+---
+
+## 📦 Building a Production APK
+To generate a **standalone APK** (for direct installation) instead of an AAB:
+
+### 1️⃣ Configure EAS
+Run this inside your project:
+```bash
+eas build:configure
+```
+This will create an `eas.json` file.
+
+### 2️⃣ Build the Production APK
+Run this command to start the build:
+```bash
+eas build --platform android --profile production
+```
+
+### 3️⃣ Download the APK
+Once the build completes, Expo will provide a link to download the **APK**.
+
+---
+
+## 📸 Screenshots
 
 
-[!!Download the App Here!!](https://expo.dev/accounts/bmehra/projects/TimerApp/builds/0b605efa-3d93-4f8e-aa56-5c0268515853)
+---
 
+## 👨‍💻 Contributing
+Feel free to **fork** this repository, create a feature branch, and submit a **pull request**.
